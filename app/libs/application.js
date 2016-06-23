@@ -110,7 +110,6 @@
 				vm.persons.me = vm.persons.twoUsers[ vm.persons.myIndex ];
 				vm.persons.other = vm.persons.twoUsers[ + !Boolean(vm.persons.myIndex) ];
 
-				console.log(vm.persons);
 			
 		};
 		 vm.InitiateHike = function(){
@@ -122,7 +121,6 @@
 				vm.persons.me = vm.persons.twoUsers[ vm.persons.myIndex ]; 
 				vm.persons.other = vm.persons.twoUsers[ + ! Boolean(vm.persons.myIndex) ];
 
-				console.log(vm.persons);
 
 
 		};
