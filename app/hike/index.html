@@ -1,0 +1,51 @@
+<link rel="stylesheet" type="text/css" href="./support_hike/hike.css"> 
+<div ng-controller="HikeController" ng-init="fetchChatData()">
+  
+<div class="menu">
+            <div class="back"><i class="zmdi zmdi-arrow-left"></i> <img src="" draggable="false"/></div>
+            <div class="name">Alex</div>
+            <div class="last">Online</div>
+
+             <div class="actions more">
+                <i class="zmdi zmdi-more-vert"></i>
+              </div>
+              <div class="actions attachment">
+                <i class="zmdi zmdi-attachment-alt"></i>
+              </div>
+              <div class="actions">
+                <i class="zmdi zmdi-phone"></i>
+              </div>
+
+        </div>
+    <ol class="chat">
+    <!-- other self -->
+    
+     <li ng-class="{ self:meFlag($index),other:!meFlag($index) }" class="other" ng-repeat="msgh in vmCopy.chatData track by $index">
+        <div class="msg">
+          <span ng-bind-html="msgh[4]"></span>
+          <time>{{ msgh[2] }}</time>  
+        </div>
+      </li>
+      <li class="self ">
+          
+        <div class="msg">
+          Te vienes a cenar al centro?
+          Te vienes a cenar al centro?
+          Te vienes a cenar al centro?
+          Te vienes a cenar al centro?
+          Te vienes a cenar al centro?
+          Te vienes a cenar al centro?
+          Te vienes a cenar al centro?
+          Te vienes a cenar al centro?
+
+          <!-- <p>Te vienes a cenar al centro?</p> -->
+          <time> 20:17 <span class="readdone"><i class="zmdi zmdi-check-all"></i>R</span> </time>  
+        </div>
+      </li>
+    </ol>
+    <input disabled="" class="textarea" type="text" placeholder="Type here!"/> <img class="emojis" src="./img/hikestick.png">
+    <div class="emojis righticox">
+      <i class="zmdi zmdi-mic "></i>
+      <i class="zmdi zmdi-mood "></i>
+    </div>
+</div>

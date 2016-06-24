@@ -1,6 +1,59 @@
-	var jimx ={};
+	function makEentity(str){
+	   return str.replace( "&",'&amp;').replace( "<",'&lt;').replace(">",'&gt;');
+	}
 
-	 jimx.ChatViewer = angular.module('viewerApp', []);
+Array.prototype.cleanup = function(val) {
+  for (var i = 0; i < this.length; i++) {
+    if (this[i] == val) {         
+      this.splice(i, 1);
+      i--;
+    }
+  }
+  return this;
+};
+
+
+
+	var jimx ={};
+	
+	jimx.worngLanding =  true;
+
+	jimx.ChatViewer = angular.module('ChatViewer', ['ngRoute','ngSanitize']);
+
+	 jimx.ChatViewer.config(function($routeProvider) {
+        $routeProvider
+
+            .when('/', {
+                templateUrl : 'homeindex.html',
+                controller  : 'DataController'
+            })	
+
+            .when('/whatsapp', {
+                templateUrl : 'whatsapp/index.html',
+                controller  : 'WhatsController',
+                caseInsensitiveMatch: true
+            })
+            .when('/hike', {
+                templateUrl : 'hike/index.html',
+                controller  : 'HikeController',
+                caseInsensitiveMatch: true
+            })	
+
+        });
+
+	 jimx.ChatViewer.service('sharedProperty', function () {
+        var property = [];
+
+        return {
+            get: function () {
+                return property;
+            },
+            set: function(value) {
+                property = value;
+            }
+        };
+    });
+
 
 	jimx.ChatViewer .directive("fileread", [function () {
 	    return ({
@@ -15,9 +68,13 @@
 	                var reader = new FileReader();
 	                reader.onload = function (loadEvent) {
 	                    scope.$apply(function () {
+	                    	// console.log(scope);
+	                		
+	                		jimx.worngLanding = false;
+	                		    	
 	                        scope.fileread = loadEvent.target.result;
 	                        
-	                         controller.type = controller.getType(scope.fileread);
+	                         controller.type = controller.getType(scope.fileread,scope);
 	                        // console.log(controller);
 		                        if ( controller.type == "w"){
 		                        	controller.InitiateWhatsapp();
@@ -36,27 +93,29 @@
 	// Whatsapp.match(/(.*)\,(.*)-(.*)\:(.*)/);
 	// Hike.match(/(.*) (.*?\:.*?\:.*?)\:(.*)-(.*)/);
 
-	jimx.ChatViewer.controller('DataController', function DataController($scope) {
+	jimx.ChatViewer.controller('DataController', function DataController($scope, $location,sharedProperty) {
 	   
 	   var vm = this;
-
+	   vm.chatData = [];
 	   vm.askWhoAreYou = function(ar){
 	   		if ( confirm("Are you "+ ar[0]) )
 	   			return 0;
 	   		return 1;
 	   }
-	   vm.getType =  function ( filereadtmp ){
+	   vm.getType =  function ( filereadtmp,scope ){
 			   	
 		   	filereadtmp = filereadtmp.split(',');
 		   	filereadtmp.shift();
-			filereadtmp.join(',');
+			filereadtmp.join(',').toString();
+		   
 
-			 vm.chatData = (atob(filereadtmp)).split("\n");
+			 vm.chatData = (Base64.decode(filereadtmp[0])).split("\n");
 				
 				if( vm.chatData[0].charAt(0) == "C" ){
 			   		return "h";					
 				}   	
 		   		return "w";	
+		   		
 	   };
 
 	   vm.getPersonsName = function(){
@@ -95,21 +154,57 @@
 
 				}
 
-						console.log(firstUser);
-	   					console.log(secondUser);
+						// console.log(firstUser);
+	   					// console.log(secondUser);
 
 				return [firstUser,secondUser];
 
 	   }
 
-		vm.InitiateWhatsapp = function(){
-		 	vm.persons = {
-				twoUsers : vm.getPersonsName()
-		 	};
+	   vm.parseWhatsappMatch = function(ar){
+	   			ar = makEentity(ar);
+			var con = ar.match(/(.*),(.*)-(.*)\:(.*)/ );
+				con.shift();
+	
+				con[3] = minEmoji( con[3] );
+
+			return con;   	
+	   }
+
+   	   vm.parseHikeMatch = function(ar){
+
+
+	   			ar = makEentity(ar);
+			var con = ar.match(/(.*) (.*?\:.*?\:.*?)\:(.*)-(.*)/);
+				// con.shift();
+				console.log(con);
+	
+			// 	con[3] = minEmoji( con[3] );
+
+			return con;   	
+	   }
+
+	   vm.InitiateWhatsapp = function(){
+			 	vm.persons = {
+					twoUsers : vm.getPersonsName()
+			 	};
+				
 				vm.persons.myIndex = vm.askWhoAreYou(vm.persons.twoUsers);
 				vm.persons.me = vm.persons.twoUsers[ vm.persons.myIndex ];
 				vm.persons.other = vm.persons.twoUsers[ + !Boolean(vm.persons.myIndex) ];
+				
+				//remove blank, null and undefined values
+				vm.chatData.cleanup("");
+				vm.chatData.cleanup(null);
+				vm.chatData.cleanup(undefined);
+				
+				// Generate proper message
+				vm.chatData = vm.chatData.map(vm.parseWhatsappMatch);
+				
+				// Share with all
+				sharedProperty.set(vm);
 
+				$location.path("/whatsapp");
 			
 		};
 		 vm.InitiateHike = function(){
@@ -121,12 +216,71 @@
 				vm.persons.me = vm.persons.twoUsers[ vm.persons.myIndex ]; 
 				vm.persons.other = vm.persons.twoUsers[ + ! Boolean(vm.persons.myIndex) ];
 
+				// first line is for intro so skip that one..
+				vm.chatData.shift();
+				
+				//remove blank, null and undefined values
+				vm.chatData.cleanup("");
+				vm.chatData.cleanup(null);
+				vm.chatData.cleanup(undefined);
 
+				// Generate proper message
+				vm.chatData = vm.chatData.map(vm.parseHikeMatch);
+				
+				// Share with all
+				sharedProperty.set(vm);
+
+				$location.path("/hike");
+				
 
 		};
 
 
-
-		
-
 	});
+
+
+
+jimx.ChatViewer.controller('WhatsController',function($scope,$location,sharedProperty){
+			
+		
+			$scope.fetchChatData = function(){
+
+				if ( jimx.worngLanding ){
+					$location.path("/");
+					return
+				}
+
+				$scope.vmCopy = sharedProperty.get();
+				// console.dir( $scope.vmCopy.chatData ); 	
+			}
+
+			$scope.meFlag = function($index){
+					return $scope.vmCopy.chatData[ $index ][2] == $scope.vmCopy.persons.me ? true : false;
+
+			}
+			$scope.dateChanged = function($index){
+				return false;
+			}
+
+});
+
+jimx.ChatViewer.controller('HikeController',function($scope,$location,sharedProperty){
+		$scope.fetchChatData = function(){
+
+				if ( jimx.worngLanding ){
+					$location.path("/");
+					return
+				}
+
+				$scope.vmCopy = sharedProperty.get();
+			}
+
+			$scope.meFlag = function($index){
+					return $scope.vmCopy.chatData[ $index ][2] == $scope.vmCopy.persons.me ? true : false;
+
+			}
+			$scope.dateChanged = function($index){
+				return false;
+			}
+});
+

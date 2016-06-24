@@ -1,18 +1,33 @@
 <!DOCTYPE html>
-<html ng-app = "viewerApp">
+<html ng-app = "ChatViewer">
 <head>
+	<meta charset="utf-8">
+
 	<title>Chat viewer</title>
+	<link rel='stylesheet prefetch' href='./support_wapp/material-design-iconic-font.min.css'>
+  <!-- <link rel="stylesheet" type="text/css" href="./support_hike/css/hike.css"> -->
+
+	<!-- <link rel='stylesheet prefetch' href='./libs/css/hike.css'> -->
+	<script type="text/javascript" src="./libs/minEmoji.min.js"></script>
+	<script type="text/javascript" src="./libs/base64.js"></script>
 	<script type="text/javascript" src="./libs/angular.min.js"></script>
+	<script type="text/javascript" src="./libs/angular-route.min.js"></script>
+	<script type="text/javascript" src="./libs/angular-sanitize.min.js"></script>
+
 </head>
 <body>
+<div ng-controller="DataController">
+	<div ng-view></div>
+</div>
+<!-- <div ng-include src="'whatsapp/index.html'"></div> -->
 
-	<div ng-controller="DataController">
-		<input type="file" fileread="chatTxt" />		
-		<hr>	
-		<p ng-model="chatTxt">
-			
-		</p>
-	</div>
+	<script type="text/ng-template" id="homeindex.html">
+			<div>
+				<input type="file" fileread="chatTxt" />		
+				<hr>	
+			</div>
+	</script>
+
 	<script type="text/javascript" src="./libs/application.js"></script>
 </body>
 </html>
