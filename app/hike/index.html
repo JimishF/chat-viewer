@@ -2,8 +2,8 @@
 <div ng-controller="HikeController" ng-init="fetchChatData()" class="boxd">
   
 <div class="menu">
-            <div class="back" ng-click="$parent.goBack()"><i class="zmdi zmdi-arrow-left"></i> <img src="" draggable="false"/></div>
-            <div class="name">Alex</div>
+            <div class="back" ng-click="$parent.goBack()"><i class="zmdi zmdi-arrow-left"></i> <img src="./profile.jpg" alt="{{ samevalo.split('')[0] }}" draggable="false"/></div>
+            <div class="name">{{ sameValo }}</div>
             <div class="last">Online</div>
 
              <div class="actions more">
@@ -22,7 +22,7 @@
       <div ng-cloak ng-repeat="msgh in vmCopy.chatData track by $index">
         
         <div ng-if="dateChanged($index)" class="day">
-            {{ NewDateUpdated }}
+            {{ $parent.parseDate(NewDateUpdated) }}
          </div>
       
          <li ng-class="{ self: meFlag($index),other:!meFlag($index) }" >

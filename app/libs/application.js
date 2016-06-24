@@ -101,9 +101,10 @@
 	jimx.ChatViewer.controller('DataController', function DataController($scope, $location, sharedProperty) {
 	   
 	   var vm = this;
+
 	   vm.chatData = [];
 	   vm.askWhoAreYou = function(ar){
-	   		if ( confirm("Are you "+ ar[0]) )
+	   		if ( confirm("If you are '"+ ar[0] + "then click ok.. otherwise cancle.." ) )
 	   			return 0;
 	   		return 1;
 	   }
@@ -198,6 +199,7 @@
 				vm.persons.me = vm.persons.twoUsers[ vm.persons.myIndex ];
 				vm.persons.other = vm.persons.twoUsers[ + !Boolean(vm.persons.myIndex) ];
 				
+				$scope.sameValo = vm.persons.other ;
 				//remove blank, null and undefined values
 				vm.chatData.cleanup("");
 				vm.chatData.cleanup(null);
@@ -221,6 +223,7 @@
 				vm.persons.me = vm.persons.twoUsers[ vm.persons.myIndex ]; 
 				vm.persons.other = vm.persons.twoUsers[ + ! Boolean(vm.persons.myIndex) ];
 
+				
 				// first line is for intro so skip that one..
 				vm.chatData.shift();
 				
@@ -240,6 +243,24 @@
 
 		};
 
+		$scope.parseDate = function(date){
+
+				
+				var parts = date.split("/");
+				var date = new Date( parts[1] +"/"+ parts[0]+ "/"+parts[2] );
+
+				var monthNames = [
+				  "Jan", "Feb", "Mar", "Apr", "May", "Jun", "July", "Aug", "Sept", "Oct", "Nov", "Dec"
+				];
+
+				var day = date.getDate();
+				var monthIndex = date.getMonth();
+				var year = date.getFullYear();
+
+				return( monthNames[monthIndex]+" "+day+", "+year);
+			}
+		
+	
 		$scope.goBack = function(){
 			jimx.worngLanding= true;
 				$location.path("/");
@@ -253,8 +274,6 @@
 jimx.ChatViewer.controller('WhatsController',function($scope,$location,sharedProperty){
 		
 			$scope.NewDateUpdated = "";
-			
-		
 			$scope.fetchChatData = function(){
 
 				if ( jimx.worngLanding ){
@@ -263,6 +282,7 @@ jimx.ChatViewer.controller('WhatsController',function($scope,$location,sharedPro
 				}
 
 				$scope.vmCopy = sharedProperty.get();
+				$scope.sameValo = $scope.vmCopy.persons.other ;
 				// console.dir( $scope.vmCopy.chatData ); 	
 			}
 
@@ -296,6 +316,8 @@ jimx.ChatViewer.controller('HikeController',function($scope,$location,sharedProp
 				}
 
 				$scope.vmCopy = sharedProperty.get();
+				$scope.sameValo = $scope.vmCopy.persons.other ;
+				
 				// console.log($scope.vmCopy.chatData);
 			}
 

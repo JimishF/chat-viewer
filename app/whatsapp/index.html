@@ -30,11 +30,11 @@
                 <i class="zmdi zmdi-arrow-left"></i>
               </div>
               <div class="avatar">
-                <img src="https://avatars2.githubusercontent.com/u/398893?s=128" alt="Avatar">
+                <img src="./profile.jpg"  alt="{{ samevalo.split('')[0] }}">
               </div>
             <!-- </ng-click> -->
               <div class="name">
-                <span>Zeno Rocha</span>
+                <span>{{ sameValo }}</span>
                 <span class="status">online</span>
               </div>
               <div class="actions more">
@@ -55,7 +55,7 @@
                 
                     <div ng-if="dateChanged($index)" class="message-system message"> 
                       <div class="message-system-body">
-                          {{ NewDateUpdated }}
+                          {{ $parent.parseDate(NewDateUpdated) }}
                       </div>  
                     </div>
 
