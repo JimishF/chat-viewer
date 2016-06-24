@@ -1,4 +1,7 @@
-
+*{
+    font-family: 'Lato', sans-serif;
+	
+}
 .button {
 	background      : #005f95;
 	border          : none;
@@ -39,6 +42,7 @@ input[type="file"] {
 	padding       : 3em;
 	text-align    : center;
 	transition    : background 0.3s, color 0.3s;
+	max-width	  : 290px;
 }
 
 #file-drag:hover {
@@ -64,10 +68,12 @@ input[type="file"] {
 }
 
 #file-upload-btn:hover {
-	background : #4499c9;
+	background : #4a3390;
 }
 
 #file-upload-form {
 	margin : auto;	
 	width  : 40%;
+	min-width: 290px;
+
 }

@@ -23,6 +23,7 @@
 	jimx.ChatViewer = angular.module('ChatViewer', ['ngRoute','ngSanitize']);
 
 	 jimx.ChatViewer.config(function($routeProvider) {
+        
         $routeProvider
 
             .when('/', {
@@ -37,6 +38,7 @@
                  animation: 'second',
                 caseInsensitiveMatch: true
             })
+
             .when('/hike', {
                 templateUrl : 'hike/index.html',
                 controller  : 'HikeController',
@@ -104,12 +106,13 @@
 
 	   vm.chatData = [];
 	   vm.askWhoAreYou = function(ar){
-	   		if ( confirm("If you are '"+ ar[0] + "then click ok.. otherwise cancle.." ) )
+	   		if ( confirm("If you are "+ ar[0] + ", then click 'OK'.. Otherwise 'Cancle'.." ) )
 	   			return 0;
 	   		return 1;
 	   }
 	   vm.getType =  function ( filereadtmp,scope ){
 			   	
+
 		   	filereadtmp = filereadtmp.split(',');
 		   	filereadtmp.shift();
 			filereadtmp.join(',').toString();
@@ -215,6 +218,7 @@
 			
 		};
 		 vm.InitiateHike = function(){
+
 		 	vm.persons = {
 				twoUsers : vm.getPersonsName()
 		 	};	
@@ -308,6 +312,7 @@ jimx.ChatViewer.controller('WhatsController',function($scope,$location,sharedPro
 jimx.ChatViewer.controller('HikeController',function($scope,$location,sharedProperty){
 
 		$scope.NewDateUpdated = "";
+
 		$scope.fetchChatData = function(){
 
 				if ( jimx.worngLanding ){
@@ -316,6 +321,7 @@ jimx.ChatViewer.controller('HikeController',function($scope,$location,sharedProp
 				}
 
 				$scope.vmCopy = sharedProperty.get();
+
 				$scope.sameValo = $scope.vmCopy.persons.other ;
 				
 				// console.log($scope.vmCopy.chatData);
