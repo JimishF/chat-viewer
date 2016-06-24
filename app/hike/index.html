@@ -19,7 +19,7 @@
         </div>
     <ol class="chat">
     <!-- other self -->
-      <div ng-repeat="msgh in vmCopy.chatData track by $index">
+      <div ng-cloak ng-repeat="msgh in vmCopy.chatData track by $index">
         
         <div ng-if="dateChanged($index)" class="day">
             {{ NewDateUpdated }}
