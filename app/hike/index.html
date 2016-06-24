@@ -19,18 +19,24 @@
         </div>
     <ol class="chat">
     <!-- other self -->
-    
-     <li ng-class="{ self: meFlag($index),other:!meFlag($index) }" ng-repeat="msgh in vmCopy.chatData track by $index">
-        <div class="msg">
-            <span ng-bind-html="msgh[3]"></span>
-           
-            <time>{{ msgh[1] }}
-                <span ng-if="meFlag($index)" class="readdone">
-                  <i class="zmdi zmdi-check-all"></i>R
-                </span> 
-            </time>  
-        </div>
-      </li>
+      <div ng-repeat="msgh in vmCopy.chatData track by $index">
+        
+        <div ng-if="dateChanged($index)" class="day">
+            {{ NewDateUpdated }}
+         </div>
+      
+         <li ng-class="{ self: meFlag($index),other:!meFlag($index) }" >
+            <div class="msg">
+                <span ng-bind-html="msgh[3]"></span>
+               
+                <time>{{ msgh[1] }}
+                    <span ng-if="meFlag($index)" class="readdone">
+                      <i class="zmdi zmdi-check-all"></i>R
+                    </span> 
+                </time>  
+            </div>
+          </li>
+      </div>
      
     </ol>
     <input disabled="" class="textarea" type="text" placeholder="Type here!"/> <img class="emojis" src="./img/hikestick.png">

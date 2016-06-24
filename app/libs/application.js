@@ -99,7 +99,6 @@
 
 	jimx.ChatViewer.controller('DataController', function DataController($scope, $location, sharedProperty) {
 	   
-
 	   var vm = this;
 	   vm.chatData = [];
 	   vm.askWhoAreYou = function(ar){
@@ -251,6 +250,8 @@
 
 
 jimx.ChatViewer.controller('WhatsController',function($scope,$location,sharedProperty){
+		
+			$scope.NewDateUpdated = "";
 			
 		
 			$scope.fetchChatData = function(){
@@ -269,12 +270,23 @@ jimx.ChatViewer.controller('WhatsController',function($scope,$location,sharedPro
 
 			}
 			$scope.dateChanged = function($index){
+
+						console.log($scope.vmCopy.chatData[ $index ][0]);
+				if ($scope.vmCopy.chatData[ $index ][0] != $scope.NewDateUpdated )
+				{
+				
+						$scope.NewDateUpdated = $scope.vmCopy.chatData[ $index ][0];
+						return true;
+				}
 				return false;
 			}
+
 
 });
 
 jimx.ChatViewer.controller('HikeController',function($scope,$location,sharedProperty){
+
+		$scope.NewDateUpdated = "";
 		$scope.fetchChatData = function(){
 
 				if ( jimx.worngLanding ){
@@ -292,6 +304,12 @@ jimx.ChatViewer.controller('HikeController',function($scope,$location,sharedProp
 			
 			}
 			$scope.dateChanged = function($index){
+
+				if ($scope.vmCopy.chatData[ $index ][0] != $scope.NewDateUpdated )
+				{
+						$scope.NewDateUpdated = $scope.vmCopy.chatData[ $index ][0];
+						return true;
+				}	
 				return false;
 			}
 

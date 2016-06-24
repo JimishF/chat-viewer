@@ -433,7 +433,6 @@ body {
 .message-system-body{
     font-family: 'Open Sans',sans-serif;
     font-size: 12.5px;
-    line-height: 21px;
     display: inline-block;
     border-radius: 7.5px;
     text-shadow: 0 1px 0 rgba(255,255,255,.4);
@@ -441,13 +440,26 @@ body {
     box-shadow: 0 1px .5px rgba(0,0,0,.13);
     color: rgba(69,90,100,.95);
     background-color: rgba(225,245,254,.92);
+
+    color: #000;
+    clear: both;
+    line-height: 18px;
+  
+    padding: 8px;
+    position: relative;
+    margin: 8px 0;
+    max-width: 85%;
+    word-wrap: break-word;
+    z-index: -1;
+
 }
-.message-system-body:after{
-      border-width: 0px 0px 0px 0;
+.message-system:after{
+    
+    border-width: 0px 0px 0px 0;
     border-color: transparent ;
     width: 0;
     height: 0;
-    
+    border-style: none;
 }
 .message-system {
     text-align: center;
