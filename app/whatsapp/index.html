@@ -1,5 +1,5 @@
   <link rel="stylesheet" type="text/css" href="./support_wapp/whatsapp.css">
-<div class="page" ng-controller="WhatsController" ng-init="fetchChatData()">
+<div class="page boxd" ng-controller="WhatsController" ng-init="fetchChatData()">
   <div class="marvel-device nexus5">
     <div class="top-bar"></div>
     <div class="sleep"></div>
@@ -25,12 +25,14 @@
         <div class="chat">
           <div class="chat-container">
             <div class="user-bar">
-              <div class="back">
+            <!-- <ng-click="$parent.goBack()"> -->
+              <div class="back" ng-click="$parent.goBack()">
                 <i class="zmdi zmdi-arrow-left"></i>
               </div>
               <div class="avatar">
                 <img src="https://avatars2.githubusercontent.com/u/398893?s=128" alt="Avatar">
               </div>
+            <!-- </ng-click> -->
               <div class="name">
                 <span>Zeno Rocha</span>
                 <span class="status">online</span>

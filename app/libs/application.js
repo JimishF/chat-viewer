@@ -2,19 +2,20 @@
 	   return str.replace( "&",'&amp;').replace( "<",'&lt;').replace(">",'&gt;');
 	}
 
-Array.prototype.cleanup = function(val) {
-  for (var i = 0; i < this.length; i++) {
-    if (this[i] == val) {         
-      this.splice(i, 1);
-      i--;
-    }
-  }
-  return this;
-};
+	Array.prototype.cleanup = function(val) {
+	  for (var i = 0; i < this.length; i++) {
+	    if (this[i] == val) {         
+	      this.splice(i, 1);
+	      i--;
+	    }
+	  }
+	  return this;
+	};
 
 
 
 	var jimx ={};
+
 	
 	jimx.worngLanding =  true;
 
@@ -25,17 +26,20 @@ Array.prototype.cleanup = function(val) {
 
             .when('/', {
                 templateUrl : 'homeindex.html',
-                controller  : 'DataController'
+                controller  : 'DataController',
+                 animation: 'first'
             })	
 
             .when('/whatsapp', {
                 templateUrl : 'whatsapp/index.html',
                 controller  : 'WhatsController',
+                 animation: 'second',
                 caseInsensitiveMatch: true
             })
             .when('/hike', {
                 templateUrl : 'hike/index.html',
                 controller  : 'HikeController',
+                 animation: 'second',
                 caseInsensitiveMatch: true
             })	
 
@@ -93,8 +97,9 @@ Array.prototype.cleanup = function(val) {
 	// Whatsapp.match(/(.*)\,(.*)-(.*)\:(.*)/);
 	// Hike.match(/(.*) (.*?\:.*?\:.*?)\:(.*)-(.*)/);
 
-	jimx.ChatViewer.controller('DataController', function DataController($scope, $location,sharedProperty) {
+	jimx.ChatViewer.controller('DataController', function DataController($scope, $location, sharedProperty) {
 	   
+
 	   var vm = this;
 	   vm.chatData = [];
 	   vm.askWhoAreYou = function(ar){
@@ -176,8 +181,8 @@ Array.prototype.cleanup = function(val) {
 
 	   			ar = makEentity(ar);
 			var con = ar.match(/(.*) (.*?\:.*?\:.*?)\:(.*)-(.*)/);
-				// con.shift();
-				console.log(con);
+				con.shift();
+				// console.log(con);
 	
 			// 	con[3] = minEmoji( con[3] );
 
@@ -235,6 +240,11 @@ Array.prototype.cleanup = function(val) {
 
 		};
 
+		$scope.goBack = function(){
+			jimx.worngLanding= true;
+				$location.path("/");
+		}
+
 
 	});
 
@@ -273,14 +283,17 @@ jimx.ChatViewer.controller('HikeController',function($scope,$location,sharedProp
 				}
 
 				$scope.vmCopy = sharedProperty.get();
+				// console.log($scope.vmCopy.chatData);
 			}
 
 			$scope.meFlag = function($index){
-					return $scope.vmCopy.chatData[ $index ][2] == $scope.vmCopy.persons.me ? true : false;
-
+				
+					return  $scope.vmCopy.chatData[ $index ][2] == $scope.vmCopy.persons.me ? true : false;
+			
 			}
 			$scope.dateChanged = function($index){
 				return false;
 			}
+
 });
 

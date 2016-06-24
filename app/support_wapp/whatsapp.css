@@ -453,3 +453,10 @@ body {
     text-align: center;
     max-width: 100%!important;
 }
+.back{
+    padding: 10px;
+  cursor: pointer;
+}
+.back:hover{
+    background: rgba(255,255,255,0.2);
+}
