@@ -100,6 +100,7 @@
 	// Whatsapp.match(/(.*)\,(.*)-(.*)\:(.*)/);
 	// Hike.match(/(.*) (.*?\:.*?\:.*?)\:(.*)-(.*)/);
 
+
 	jimx.ChatViewer.controller('DataController', function DataController($scope, $location, sharedProperty) {
 	   
 	   var vm = this;
@@ -118,11 +119,25 @@
 			filereadtmp.join(',').toString();
 		   
 
-			 vm.chatData = (Base64.decode(filereadtmp[0])).split("\n");
-				
-				if( vm.chatData[0].charAt(0) == "C" ){
+			 filereadtmp = (Base64.decode(filereadtmp[0]));
+			// console.log( filereadtmp );
+
+				if( filereadtmp.charAt(0) == "C" ){
+
+			 		while(dx= filereadtmp.match(/(.*) (.*?\:.*?\:.*?)\:(.*)-(.*)/) ){
+			 			// vm.chatData.push(d);
+			 			console.log(dx);
+			 		}
+			 			
+						// console.log( vm.chatData );
+
 			   		return "h";					
-				}   	
+				}   
+
+			 		vm.chatData = filereadtmp.match( /((.*)\,(.*)-(.*)\:(.*)){3}/ );
+
+					console.log( vm.chatData );
+
 		   		return "w";	
 		   		
 	   };
@@ -141,7 +156,14 @@
 
 			   		if( vm.type == "w" )
 			   		{
-						currentMsg.user =  (currentMsg.data.match(/(.*)\,(.*)-(.*)\:(.*)/)) [3];
+						var tempusex = (currentMsg.data.match(/(.*)\,(.*)-(.*)\:(.*)/));
+						if(tempusex == undefined || tempusex == "" || tempusex == NaN || tempusex == null){
+							// vm.chatData[i] = "";
+
+							 vm.chatData.splice(i, 1);		
+							continue;
+						}
+						currentMsg.user =  tempusex[3];
 	   					if( currentMsg.user != firstUser && firstUser != ""){
 		   					secondUser = currentMsg.user;
 		   					break;
@@ -296,13 +318,13 @@ jimx.ChatViewer.controller('WhatsController',function($scope,$location,sharedPro
 			}
 			$scope.dateChanged = function($index){
 
-						console.log($scope.vmCopy.chatData[ $index ][0]);
-				if ($scope.vmCopy.chatData[ $index ][0] != $scope.NewDateUpdated )
-				{
+				console.log($scope.vmCopy.chatData[ $index ][0]);
+				// if ($scope.vmCopy.chatData[ $index ][0] != $scope.NewDateUpdated )
+				// {
 				
-						$scope.NewDateUpdated = $scope.vmCopy.chatData[ $index ][0];
-						return true;
-				}
+				// 		$scope.NewDateUpdated = $scope.vmCopy.chatData[ $index ][0];
+				// 		return true;
+				// }
 				return false;
 			}
 
