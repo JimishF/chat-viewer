@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html ng-app = "ChatViewer" ng-controller="DataController">
+<head>
+	<meta charset="utf-8">
+
+	<title>Chat viewer !!</title>
+	<link rel='stylesheet prefetch' href='./libs/fonts/material-design-iconic-font.min.css'>
+	<link rel='stylesheet prefetch' href='./libs/css/application_style.css'>
+
+  <!-- <link rel="stylesheet" type="text/css" href="./support_hike/css/hike.css"> -->
+
+	<!-- <link rel='stylesheet prefetch' href='./libs/css/hike.css'> -->
+	<script type="text/javascript" src="./libs/minEmoji.min.js"></script>
+	<script type="text/javascript" src="./libs/base64.js"></script>
+	<script type="text/javascript" src="./libs/angular.min.js"></script>
+	<script type="text/javascript" src="./libs/angular-route.min.js"></script>
+	<script type="text/javascript" src="./libs/angular-sanitize.min.js"></script>
+
+</head>
+<body>
+<div>
+	<div ng-view class="view" ng-cloak></div>
+</div>
+<!-- <div ng-include src="'whatsapp/index.html'"></div> -->
+
+	<script type="text/ng-template" id="homeindex.html">
+		
+		<div id="file-upload-form">
+			<input id="file-upload" type="file" fileread="chatTxt" name="fileUpload" />
+			<label for="file-upload" id="file-drag">
+				Select a text file of your <br> Whatsapp / Hike chat
+				
+				<br /><br /><span id="file-upload-btn" class="button">Add a file</span>
+			</label>
+		</div>
+
+	</script>
+
+	<script type="text/javascript" src="./libs/application.js"></script>
+</body>
+</html>

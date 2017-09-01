@@ -1,0 +1,47 @@
+<link rel="stylesheet" type="text/css" href="./support_hike/hike.css"> 
+<div ng-controller="HikeController" ng-init="fetchChatData()" class="boxd">
+  
+<div class="menu">
+            <div class="back" ng-click="$parent.goBack()"><i class="zmdi zmdi-arrow-left"></i> <img src="./profile.jpg" alt="{{ samevalo.split('')[0] }}" draggable="false"/></div>
+            <div class="name">{{ sameValo }}</div>
+            <div class="last">Online</div>
+
+             <div class="actions more">
+                <i class="zmdi zmdi-more-vert"></i>
+              </div>
+              <div class="actions attachment">
+                <i class="zmdi zmdi-attachment-alt"></i>
+              </div>
+              <div class="actions">
+                <i class="zmdi zmdi-phone"></i>
+              </div>
+
+        </div>
+    <ol class="chat">
+    <!-- other self -->
+      <div ng-cloak ng-repeat="msgh in vmCopy.chatData track by $index">
+        
+        <div ng-if="dateChanged($index)" class="day">
+            {{ $parent.parseDate(NewDateUpdated) }}
+         </div>
+      
+         <li ng-if="msgh[3]" ng-class="{ self: meFlag($index) == 1,other:meFlag($index) == 0, system: meFlag($index) == 2 }" >
+            <div class="msg">
+                <span ng-bind-html="msgh[3]"></span>
+               
+                <time>{{ msgh[1] }}
+                    <span ng-if="meFlag($index) == true" class="readdone">
+                      <i class="zmdi zmdi-check-all"></i>R
+                    </span> 
+                </time>  
+            </div>
+          </li>
+      </div>
+     
+    </ol>
+    <input disabled="" class="textarea" type="text" placeholder="Type here!"/> <img class="emojis" src="./img/hikestick.png">
+    <div class="emojis righticox">
+      <i class="zmdi zmdi-mic "></i>
+      <i class="zmdi zmdi-mood "></i>
+    </div>
+</div>
