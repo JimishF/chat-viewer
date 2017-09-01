@@ -33,7 +33,11 @@
             })	
 
             .when('/whatsapp', {
+<<<<<<< HEAD
                 templateUrl : 'whatsapp/indx.html',
+=======
+                templateUrl : 'whatsapp/index.html',
+>>>>>>> bc508ce36ce266acda528c872fdb9a6ef546fe20
                 controller  : 'WhatsController',
                  animation: 'second',
                 caseInsensitiveMatch: true
@@ -100,28 +104,62 @@
 	// Whatsapp.match(/(.*)\,(.*)-(.*)\:(.*)/);
 	// Hike.match(/(.*) (.*?\:.*?\:.*?)\:(.*)-(.*)/);
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> bc508ce36ce266acda528c872fdb9a6ef546fe20
 	jimx.ChatViewer.controller('DataController', function DataController($scope, $location, sharedProperty) {
 	   
 	   var vm = this;
 
 	   vm.chatData = [];
 	   vm.askWhoAreYou = function(ar){
+<<<<<<< HEAD
 	   		if ( confirm("If you are '"+ ar[0] + "then click ok.. otherwise cancle.." ) )
+=======
+	   		if ( confirm("If you are "+ ar[0] + ", then click 'OK'.. Otherwise 'Cancle'.." ) )
+>>>>>>> bc508ce36ce266acda528c872fdb9a6ef546fe20
 	   			return 0;
 	   		return 1;
 	   }
 	   vm.getType =  function ( filereadtmp,scope ){
 			   	
+<<<<<<< HEAD
+=======
+
+>>>>>>> bc508ce36ce266acda528c872fdb9a6ef546fe20
 		   	filereadtmp = filereadtmp.split(',');
 		   	filereadtmp.shift();
 			filereadtmp.join(',').toString();
 		   
 
+<<<<<<< HEAD
 			 vm.chatData = (Base64.decode(filereadtmp[0])).split("\n");
 				
 				if( vm.chatData[0].charAt(0) == "C" ){
 			   		return "h";					
 				}   	
+=======
+			 filereadtmp = (Base64.decode(filereadtmp[0]));
+			// console.log( filereadtmp );
+
+				if( filereadtmp.charAt(0) == "C" ){
+
+			 		while(dx= filereadtmp.match(/(.*) (.*?\:.*?\:.*?)\:(.*)-(.*)/) ){
+			 			// vm.chatData.push(d);
+			 			console.log(dx);
+			 		}
+			 			
+						// console.log( vm.chatData );
+
+			   		return "h";					
+				}   
+
+			 		vm.chatData = filereadtmp.match( /((.*)\,(.*)-(.*)\:(.*)){3}/ );
+
+					console.log( vm.chatData );
+
+>>>>>>> bc508ce36ce266acda528c872fdb9a6ef546fe20
 		   		return "w";	
 		   		
 	   };
@@ -140,7 +178,18 @@
 
 			   		if( vm.type == "w" )
 			   		{
+<<<<<<< HEAD
 						currentMsg.user =  (currentMsg.data.match(/(.*)\,(.*)-(.*)\:(.*)/)) [3];
+=======
+						var tempusex = (currentMsg.data.match(/(.*)\,(.*)-(.*)\:(.*)/));
+						if(tempusex == undefined || tempusex == "" || tempusex == NaN || tempusex == null){
+							// vm.chatData[i] = "";
+
+							 vm.chatData.splice(i, 1);		
+							continue;
+						}
+						currentMsg.user =  tempusex[3];
+>>>>>>> bc508ce36ce266acda528c872fdb9a6ef546fe20
 	   					if( currentMsg.user != firstUser && firstUser != ""){
 		   					secondUser = currentMsg.user;
 		   					break;
@@ -189,8 +238,7 @@
 				catch(e){
 					// console.log(i);
 					return ["", "", ar, true];
-				}
-	
+				}	
 			// 	con[3] = minEmoji( con[3] );
 
 			return con;   	
@@ -220,14 +268,22 @@
 				$location.path("/whatsapp");
 			
 		};
+<<<<<<< HEAD
 		vm.InitiateHike = function(){
+=======
+		 vm.InitiateHike = function(){
+>>>>>>> bc508ce36ce266acda528c872fdb9a6ef546fe20
 
 		 	vm.persons = {
 				twoUsers : vm.getPersonsName()
 		 	};	
 
 		 		vm.persons.myIndex = vm.persons.twoUsers[0] == "me" ? 0 : 1;
+<<<<<<< HEAD
 				vm.persons.me = "me"; 
+=======
+				vm.persons.me = vm.persons.twoUsers[ vm.persons.myIndex ]; 
+>>>>>>> bc508ce36ce266acda528c872fdb9a6ef546fe20
 				vm.persons.other = vm.persons.twoUsers[ + ! Boolean(vm.persons.myIndex) ];
 
 				
@@ -299,6 +355,7 @@ jimx.ChatViewer.controller('WhatsController',function($scope,$location,sharedPro
 			}
 			$scope.dateChanged = function($index){
 
+<<<<<<< HEAD
 				// console.log($scope.vmCopy.chatData[ $index ][0]);
 				if ($scope.vmCopy.chatData[ $index ][0] != $scope.NewDateUpdated )
 				{
@@ -306,6 +363,15 @@ jimx.ChatViewer.controller('WhatsController',function($scope,$location,sharedPro
 						$scope.NewDateUpdated = $scope.vmCopy.chatData[ $index ][0];
 						return true;
 				}
+=======
+				console.log($scope.vmCopy.chatData[ $index ][0]);
+				// if ($scope.vmCopy.chatData[ $index ][0] != $scope.NewDateUpdated )
+				// {
+				
+				// 		$scope.NewDateUpdated = $scope.vmCopy.chatData[ $index ][0];
+				// 		return true;
+				// }
+>>>>>>> bc508ce36ce266acda528c872fdb9a6ef546fe20
 				return false;
 			}
 
@@ -331,6 +397,7 @@ jimx.ChatViewer.controller('HikeController',function($scope,$location,sharedProp
 			}
 
 			$scope.meFlag = function($index){
+<<<<<<< HEAD
 					if (	$scope.vmCopy.chatData[ $index ][3].substr &&
 							$scope.vmCopy.chatData[ $index ][3].substr(1,1) == '"' &&
 							$scope.vmCopy.chatData[ $index ][3]
@@ -341,6 +408,10 @@ jimx.ChatViewer.controller('HikeController',function($scope,$location,sharedProp
 					}
 					// console.log()
 					return $scope.vmCopy.chatData[ $index ][2] == $scope.vmCopy.persons.me ? 1 : 0;
+=======
+				
+					return  $scope.vmCopy.chatData[ $index ][2] == $scope.vmCopy.persons.me ? true : false;
+>>>>>>> bc508ce36ce266acda528c872fdb9a6ef546fe20
 			
 			}
 			$scope.dateChanged = function($index){
